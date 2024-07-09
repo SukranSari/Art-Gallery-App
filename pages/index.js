@@ -1,19 +1,21 @@
-// export default function HomePage() {
-//   return (
-//     <div>
-//       <h1>Hello from Next.js</h1>
-//     </div>
-//   );
-// }
 import useSWR from "swr";
+import ArtPieces from "@/components/ArtPieces";
+
+const fetcher = (...args) => fetch(...args).then((response) => response.json());
+const url = "https://example-apis.vercel.app/api/art";
 
 export default function HomePage() {
-  const fetcher = (...args) => fetch(...args).then((response) => response.json);
+  const { data: pieces, error, isLoading } = useSWR(url, fetcher);
 
-  function Character() {
-    const { data } = useSWR("https://example-apis.vercel.app/api/art", fetcher);
+  console.log(pieces);
 
-    // render data
-    return <div>Hello {data.artist}!</div>; // Hello Steve Johnson!
-  }
+  if (error) return <h1>Error, please try again!</h1>;
+  if (isLoading) return <h1>Loading..</h1>;
+
+  return (
+    <>
+      <h1>Art Gallery</h1>
+      {<ArtPieces pieces={pieces} />}
+    </>
+  );
 }
