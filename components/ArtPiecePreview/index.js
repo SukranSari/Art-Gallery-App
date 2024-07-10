@@ -32,7 +32,7 @@ export default function ArtPiecePreview({ piece }) {
       />
       <StyledTitle>
         <StyledP>
-          "{title}" by {artist}
+          {title} by {artist}
         </StyledP>
       </StyledTitle>
     </StyledContainer>
